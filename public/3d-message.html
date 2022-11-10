@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <style>
+    html,
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .iframe-body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      color: turquoise;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 300px;
+      min-height: 300px;
+      width: 100vw;
+      height: 100vh;
+    }
+    .btn-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin: 20px;
+    }
+    .btn {
+      background: darkorchid;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 2px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+  </style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="iframe-body">
+      <div>This is a message that comes from the 3d secure system</div>
+      <div class="btn-container">
+        <button class="btn" type="button" id="fail-btn">Failure</button>
+        <button class="btn" type="button" id="succeed-btn">Success</button>
+      </div>
+    </div>
+  </body>
+  <script async defer>
+    function failHandler() {
+      console.log("called fail handler");
+      parent.history.pushState(
+        {},
+        "",
+        "http://localhost:3000/verified?token=FAILURESomeVeryLongNonLegibleTokenThatIsNeededToVerifiyTheSuccessOnTheOtherSide&status=FAILURE"
+      );
+      parent.location.reload();
+    }
+    document.getElementById("fail-btn").addEventListener("click", failHandler);
+
+    function successHandler() {
+      console.log("called fail handler");
+      parent.history.pushState(
+        {},
+        "",
+        "http://localhost:3000/verified?token=SomeVeryLongNonLegibleTokenThatIsNeededToVerifiyTheSuccessOnTheOtherSide&status=SUCCESS"
+      );
+      parent.location.reload();
+    }
+    document.getElementById("succeed-btn").addEventListener("click", successHandler);
+  </script>
+</html>

@@ -10,8 +10,8 @@
     }
     .iframe-body {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
-      color: turquoise;
-      background-color: black;
+      color: #333;
+      background-color: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -30,14 +30,16 @@
       margin: 20px;
     }
     .btn {
-      background: darkorchid;
+      background: orange;
       border: none;
       border-radius: 8px;
       padding: 10px 20px;
       font-weight: bold;
       color: white;
-      box-shadow: 0 2px rgba(0, 0, 0, 0.2);
       cursor: pointer;
+    }
+    .btn-fail {
+      background-color: turquoise;
     }
   </style>
   <head>
@@ -51,7 +53,7 @@
       <h1>Hi <span id="cardholder-name"></span></h1>
       <p>Please confirm this purchase of <span id="purchase-amount"></span> via your banking app</p>
       <div class="btn-container">
-        <button class="btn" type="button" id="fail-btn">Failure</button>
+        <button class="btn btn-fail" type="button" id="fail-btn">Failure</button>
         <button class="btn" type="button" id="succeed-btn">Success</button>
       </div>
     </div>

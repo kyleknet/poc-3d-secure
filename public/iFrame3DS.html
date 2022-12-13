@@ -49,7 +49,7 @@
   <body>
     <div class="iframe-body">
       <h1>Hi <span id="cardholder-name"></span></h1>
-      <p>Please confirm this purchase via your banking app</p>
+      <p>Please confirm this purchase of <span id="purchase-amount"></span> via your banking app</p>
       <div class="btn-container">
         <button class="btn" type="button" id="fail-btn">Failure</button>
         <button class="btn" type="button" id="succeed-btn">Success</button>
@@ -58,18 +58,28 @@
   </body>
   <script async defer>
     const queryParams = new URLSearchParams(window.location.search);
+
     const cardholderName = queryParams.get("cardholderName");
     const creditCardNumber = queryParams.get("creditCardNumber");
     const expiryDate = queryParams.get("expiryDate");
     const cvv = queryParams.get("cvv");
+    const amount = queryParams.get("amount");
+    const processingCode = queryParams.get("processingCode");
+    const merchantType = queryParams.get("merchantType");
+    const posConditionCode = queryParams.get("posConditionCode");
+    const aftServiceFee = queryParams.get("aftServiceFee");
+    const acquiringInstitutionIdentificationCode = queryParams.get("acquiringInstitutionIdentificationCode");
+    const accountIdentifierTypeCode = queryParams.get("accountIdentifierTypeCode");
 
     document.getElementById("cardholder-name").innerText = cardholderName;
+    document.getElementById("purchase-amount").innerText = `R${amount}`;
 
     function failHandler() {
       parent.history.pushState(
         {},
         "",
-        `${window.location.origin}/verification?token=Some-Token-That-Is-Returned-From-The-3D-Secure-Provider-That-We-Can-Store-And-Refer-Back-To&status=FAILURE&cardholderName=${cardholderName}&creditCardNumber=${creditCardNumber}&expiryDate=${expiryDate}&cvv=${cvv}`
+        `${window.location.origin}/verification?token=Some-Token-That-Is-Returned-From-The-3D-Secure-Provider-That-We-Can-Store-And-Refer-Back-To&status=FAILURE&cardholderName=${cardholderName}&creditCardNumber=${creditCardNumber}&expiryDate=${expiryDate}&cvv=${cvv}&amount=${amount}&processingCode=${processingCode}&merchantType=${merchantType}&posConditionCode=${posConditionCode}&aftServiceFee=${aftServiceFee}&acquiringInstitutionIdentificationCode=${acquiringInstitutionIdentificationCode}&accountIdentifierTypeCode=${accountIdentifierTypeCode}
+        `
       );
       parent.location.reload();
     }
@@ -79,7 +89,8 @@
       parent.history.pushState(
         {},
         "",
-        `${window.location.origin}/verification?token=Some-Token-That-Is-Returned-From-The-3D-Secure-Provider-That-We-Can-Store-And-Refer-Back-To&status=SUCCESS&cardholderName=${cardholderName}&creditCardNumber=${creditCardNumber}&expiryDate=${expiryDate}&cvv=${cvv}`
+        `${window.location.origin}/verification?token=Some-Token-That-Is-Returned-From-The-3D-Secure-Provider-That-We-Can-Store-And-Refer-Back-To&status=SUCCESS&cardholderName=${cardholderName}&creditCardNumber=${creditCardNumber}&expiryDate=${expiryDate}&cvv=${cvv}&amount=${amount}&processingCode=${processingCode}&merchantType=${merchantType}&posConditionCode=${posConditionCode}&aftServiceFee=${aftServiceFee}&acquiringInstitutionIdentificationCode=${acquiringInstitutionIdentificationCode}&accountIdentifierTypeCode=${accountIdentifierTypeCode}
+        `
       );
       parent.location.reload();
     }

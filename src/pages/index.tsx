@@ -10,6 +10,7 @@ export default function Home() {
   const creditCardNumberRef = useRef<HTMLInputElement>(null);
   const expiryDateRef = useRef<HTMLInputElement>(null);
   const cvvRef = useRef<HTMLInputElement>(null);
+  const amountRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ export default function Home() {
         creditCardNumber: creditCardNumberRef.current?.value,
         expiryDate: expiryDateRef.current?.value,
         cvv: cvvRef.current?.value,
+        amount: Number(amountRef.current?.value).toFixed(2),
       }),
     });
     const data = await res.json();
@@ -58,6 +60,10 @@ export default function Home() {
             <div className="form-group">
               <label htmlFor="cvv">CVV</label>
               <input ref={cvvRef} type="text" name="cvv" id="cvv" />
+            </div>
+            <div className="form-group">
+              <label htmlFor="amount">Amount</label>
+              <input ref={amountRef} type="text" name="amount" id="amount" />
             </div>
             <button className="btn" type="submit">
               Submit

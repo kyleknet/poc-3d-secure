@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Loader from "../components/Loader";
+import Layout from "../components/Layout";
 
 export default function Verification() {
   const router = useRouter();
@@ -35,5 +36,5 @@ export default function Verification() {
     }
   }, [router, params]);
 
-  return <Loader />;
+  return <Layout><Loader /></Layout>;
 }

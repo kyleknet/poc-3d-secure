@@ -1,18 +1,30 @@
 "use-client";
 
-import { useState } from "react";
+import { useState, useRef, ChangeEvent } from "react";
 import Layout from "../components/Layout";
 
 export default function Home() {
   const [threeDiFrame, setThreeDiFrame] = useState<any>(null);
 
-  const apiCall = async (where: string) => {
-    const res = await fetch(`/api/${where}`, {
+  const cardholderNameRef = useRef<HTMLInputElement>(null);
+  const creditCardNumberRef = useRef<HTMLInputElement>(null);
+  const expiryDateRef = useRef<HTMLInputElement>(null);
+  const cvvRef = useRef<HTMLInputElement>(null);
+
+  const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const res = await fetch(`/api/3dsProvider/3dSecureVerification`, {
       method: "POST",
       headers: {
         "Cache-control": "no-cache",
+        "Content-type": "application/json",
       },
-      body: JSON.stringify({ where }),
+      body: JSON.stringify({
+        cardholderName: cardholderNameRef.current?.value,
+        creditCardNumber: creditCardNumberRef.current?.value,
+        expiryDate: expiryDateRef.current?.value,
+        cvv: cvvRef.current?.value,
+      }),
     });
     const data = await res.json();
     console.log(data.iframe);
@@ -30,15 +42,36 @@ export default function Home() {
             sandbox="allow-scripts allow-same-origin allow-top-navigation allow-forms"
           />
         ) : (
-          <button className="btn" onClick={() => apiCall("3dsecure")} type="button">
-            Click here for 3dsecure
-          </button>
+          <form onSubmit={onSubmit}>
+            <div className="form-group">
+              <label htmlFor="cardholder-name">Cardholder Name</label>
+              <input ref={cardholderNameRef} type="text" name="cardholder-name" id="cardholder-name" />
+            </div>
+            <div className="form-group">
+              <label htmlFor="credit-card-number">Credit Card Number</label>
+              <input ref={creditCardNumberRef} type="text" name="credit-card-number" id="credit-card-number" />
+            </div>
+            <div className="form-group">
+              <label htmlFor="expiry-date">Expiry Date</label>
+              <input ref={expiryDateRef} type="text" name="expiry-date" id="expiry-date" />
+            </div>
+            <div className="form-group">
+              <label htmlFor="cvv">CVV</label>
+              <input ref={cvvRef} type="text" name="cvv" id="cvv" />
+            </div>
+            <button className="btn" type="submit">
+              Submit
+            </button>
+          </form>
         )}
       </Layout>
       <style jsx>{`
-        .btn {
-          border: none;
-          background: none;
+        form {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
         }
         .iframe-container {
           width: 80vh;
@@ -47,6 +80,19 @@ export default function Home() {
           border: 2px solid darkturquoise;
           border-radius: 8px;
           box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+        }
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .form-group input {
+          background-color: white;
+          border: none;
+          height: 30px;
+          color: #333;
+          padding: 0px 8px;
         }
         .btn {
           padding: 10px 20px;

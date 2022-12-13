@@ -2,7 +2,7 @@ import Head from "next/head";
 import { type ReactNode } from "react";
 
 type Props = {
-  children: ReactNode;
+  children?: ReactNode;
   bgColor?: string;
 } & typeof defaultProps;
 

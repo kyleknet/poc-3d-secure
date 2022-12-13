@@ -44,11 +44,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>3DSecure iFrame</title>
   </head>
   <body>
     <div class="iframe-body">
-      <div>This is a message that comes from the 3d secure system</div>
+      <h1>Hi <span id="cardholder-name"></span></h1>
+      <p>Please confirm this purchase via your banking app</p>
       <div class="btn-container">
         <button class="btn" type="button" id="fail-btn">Failure</button>
         <button class="btn" type="button" id="succeed-btn">Success</button>
@@ -56,23 +57,29 @@
     </div>
   </body>
   <script async defer>
+    const queryParams = new URLSearchParams(window.location.search);
+    const cardholderName = queryParams.get("cardholderName");
+    const creditCardNumber = queryParams.get("creditCardNumber");
+    const expiryDate = queryParams.get("expiryDate");
+    const cvv = queryParams.get("cvv");
+
+    document.getElementById("cardholder-name").innerText = cardholderName;
+
     function failHandler() {
-      console.log("called fail handler");
       parent.history.pushState(
         {},
         "",
-        "https://poc-3d-secure.vercel.app/verified?token=FAILURESomeVeryLongNonLegibleTokenThatIsNeededToVerifiyTheSuccessOnTheOtherSide&status=FAILURE"
+        `${window.location.origin}/verification?token=Some-Token-That-Is-Returned-From-The-3D-Secure-Provider-That-We-Can-Store-And-Refer-Back-To&status=FAILURE&cardholderName=${cardholderName}&creditCardNumber=${creditCardNumber}&expiryDate=${expiryDate}&cvv=${cvv}`
       );
       parent.location.reload();
     }
     document.getElementById("fail-btn").addEventListener("click", failHandler);
 
     function successHandler() {
-      console.log("called fail handler");
       parent.history.pushState(
         {},
         "",
-        "https://poc-3d-secure.vercel.app/verified?token=SomeVeryLongNonLegibleTokenThatIsNeededToVerifiyTheSuccessOnTheOtherSide&status=SUCCESS"
+        `${window.location.origin}/verification?token=Some-Token-That-Is-Returned-From-The-3D-Secure-Provider-That-We-Can-Store-And-Refer-Back-To&status=SUCCESS&cardholderName=${cardholderName}&creditCardNumber=${creditCardNumber}&expiryDate=${expiryDate}&cvv=${cvv}`
       );
       parent.location.reload();
     }

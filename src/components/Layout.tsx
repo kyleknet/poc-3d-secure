@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { type ReactNode } from "react";
 
 type Props = {
@@ -18,7 +19,12 @@ function Layout({ children, bgColor }: Props) {
         <meta name="description" content="3D Secure POC" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>Please open your browser&apos;s devtools and inspect the network tab to view the the flow of data</header>
+      <header>
+        Please open your browser&apos;s devtools and inspect the network tab to view the the
+        <Link href="/flow">
+          <span className="link">flow of data</span>
+        </Link>
+      </header>
       <div className="container">{children}</div>
       <style jsx>{`
         header {
@@ -26,6 +32,7 @@ function Layout({ children, bgColor }: Props) {
           justify-content: center;
           align-items: center;
           height: 30px;
+          gap: 4px;
         }
         .container {
           background-color: ${bgColor};
@@ -35,6 +42,9 @@ function Layout({ children, bgColor }: Props) {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+        }
+        .link {
+          text-decoration: underline;
         }
       `}</style>
     </>

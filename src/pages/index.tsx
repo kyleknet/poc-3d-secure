@@ -2,9 +2,11 @@
 
 import { useState, useRef, ChangeEvent } from "react";
 import Layout from "../components/Layout";
+import Loader from "../components/Loader";
 
 export default function Home() {
   const [threeDiFrame, setThreeDiFrame] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const cardholderNameRef = useRef<HTMLInputElement>(null);
   const creditCardNumberRef = useRef<HTMLInputElement>(null);
@@ -14,24 +16,37 @@ export default function Home() {
 
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch(`/api/3dsProvider/3dSecureVerification`, {
-      method: "POST",
-      headers: {
-        "Cache-control": "no-cache",
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        cardholderName: cardholderNameRef.current?.value,
-        creditCardNumber: creditCardNumberRef.current?.value,
-        expiryDate: expiryDateRef.current?.value,
-        cvv: cvvRef.current?.value,
-        amount: Number(amountRef.current?.value).toFixed(2),
-      }),
-    });
-    const data = await res.json();
-    console.log(data.iframe);
-    setThreeDiFrame(data.iframe);
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/3dsProvider/3dSecureVerification`, {
+        method: "POST",
+        headers: {
+          "Cache-control": "no-cache",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          cardholderName: cardholderNameRef.current?.value,
+          creditCardNumber: creditCardNumberRef.current?.value,
+          expiryDate: expiryDateRef.current?.value,
+          cvv: cvvRef.current?.value,
+          amount: Number(amountRef.current?.value).toFixed(2),
+        }),
+      });
+      const data = await res.json();
+      setThreeDiFrame(data.iframe);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  if (loading) {
+    return (
+      <Layout>
+        <Loader />
+      </Layout>
+    );
+  }
 
   return (
     <>
@@ -92,7 +107,6 @@ export default function Home() {
           flex-direction: column;
           gap: 4px;
         }
-
         .form-group input {
           background-color: white;
           border: none;

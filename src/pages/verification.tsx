@@ -27,14 +27,22 @@ export default function Verification() {
     if (typeof window !== "undefined") {
       if (router.query.status === "FAILURE") {
         postToBackend(params);
-        router.replace("/fail", undefined, { shallow: true });
+        setTimeout(() => {
+          router.replace("/fail", undefined, { shallow: true });
+        }, 2000);
       }
       if (router.query.status === "SUCCESS") {
         postToBackend(params);
-        router.replace("/success", undefined, { shallow: true });
+        setTimeout(() => {
+          router.replace("/success", undefined, { shallow: true });
+        }, 2000);
       }
     }
   }, [router, params]);
 
-  return <Layout><Loader /></Layout>;
+  return (
+    <Layout>
+      <Loader />
+    </Layout>
+  );
 }

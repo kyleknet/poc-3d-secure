@@ -1,12 +1,13 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const processingCode = "010";
-  const merchantType = "UN";
-  const posConditionCode = "59";
-  const aftServiceFee = "D2";
-  const acquiringInstitutionIdentificationCode = "200";
-  const accountIdentifierTypeCode = "03";
+  // Will need to get populated from an API -> DT BE (Global Startup Params**)
+  const processingCode = '010';
+  const merchantType = 'UN';
+  const posConditionCode = '59';
+  const aftServiceFee = 'D2';
+  const acquiringInstitutionIdentificationCode = '200';
+  const accountIdentifierTypeCode = '03';
 
   setTimeout(() => {
     res.status(200).json({

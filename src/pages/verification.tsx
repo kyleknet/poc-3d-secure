@@ -1,9 +1,9 @@
-"use-client";
+'use-client';
 
-import { useCallback, useEffect } from "react";
-import { useRouter } from "next/router";
-import Loader from "../components/Loader";
-import Layout from "../components/Layout";
+import { useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Loader from '../components/Loader';
+import Layout from '../components/Layout';
 
 export default function Verification() {
   const router = useRouter();
@@ -14,17 +14,17 @@ export default function Verification() {
       try {
         const res = await fetch(`/api/dtBackend/transactionCapture`, {
           headers: {
-            "Content-type": "application/json",
-            "Cache-control": "no-cache",
+            'Content-type': 'application/json',
+            'Cache-control': 'no-cache',
           },
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify(input),
         });
         const data = await res.json();
         if (data.success === true) {
-          router.replace("/success", undefined, { shallow: true });
+          router.replace('/success', undefined, { shallow: true });
         } else {
-          router.replace("/fail", undefined, { shallow: true });
+          router.replace('/fail', undefined, { shallow: true });
         }
       } catch (error) {
         console.error(error);
@@ -34,7 +34,7 @@ export default function Verification() {
   );
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       var timer = setTimeout(() => {
         postToBackend(params);
       }, 2000);

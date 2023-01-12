@@ -1,8 +1,8 @@
-"use-client";
+'use-client';
 
-import { useState, useRef, ChangeEvent } from "react";
-import Layout from "../components/Layout";
-import Loader from "../components/Loader";
+import { useState, useRef, ChangeEvent } from 'react';
+import Layout from '../components/Layout';
+import Loader from '../components/Loader';
 
 export default function Home() {
   const [threeDiFrame, setThreeDiFrame] = useState<any>(null);
@@ -19,10 +19,10 @@ export default function Home() {
     setLoading(true);
     try {
       const res = await fetch(`/api/3dsProvider/3dSecureVerification`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Cache-control": "no-cache",
-          "Content-type": "application/json",
+          'Cache-control': 'no-cache',
+          'Content-type': 'application/json',
         },
         body: JSON.stringify({
           cardholderName: cardholderNameRef.current?.value,
@@ -50,6 +50,7 @@ export default function Home() {
 
   return (
     <>
+      {/* TODO HOW TO IFRAME IN MOBILE APP */}
       <Layout>
         {threeDiFrame ? (
           <iframe

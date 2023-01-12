@@ -1,7 +1,7 @@
-"use-client";
+'use-client';
 
-import Link from "next/link";
-import Layout from "../components/Layout";
+import Link from 'next/link';
+import Layout from '../components/Layout';
 
 export default function Flow() {
   return (
@@ -11,7 +11,7 @@ export default function Flow() {
         <p>Please note, false delays have been added in to slow app responses</p>
         <div className="box-container">
           <div className="box">User enters data into form and clicks submit</div>
-          <div className="box">VISA elements are added onto the data byt the app and then sent to the 3DS provider</div>
+          <div className="box">VISA elements are added onto the data by the app and then sent to the 3DS provider</div>
           <div className="box">3DS provider replies back with an iframe and self-contained logic</div>
           <div className="box">
             3DS provider performs their own logic and once complete they will run a callback to our frontend
@@ -52,13 +52,13 @@ export default function Flow() {
           position: relative;
         }
         .box::after {
-          content: "➞";
+          content: '➞';
           position: absolute;
           right: -55px;
           font-size: 50px;
         }
         .box:last-of-type::after {
-          content: "";
+          content: '';
         }
       `}</style>
     </>

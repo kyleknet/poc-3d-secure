@@ -1,6 +1,6 @@
-import Head from "next/head";
-import Link from "next/link";
-import { type ReactNode } from "react";
+import Head from 'next/head';
+import Link from 'next/link';
+import { type ReactNode } from 'react';
 
 type Props = {
   children?: ReactNode;
@@ -8,7 +8,7 @@ type Props = {
 } & typeof defaultProps;
 
 const defaultProps = {
-  bgColor: "slategrey",
+  bgColor: 'slategrey',
 };
 
 function Layout({ children, bgColor }: Props) {

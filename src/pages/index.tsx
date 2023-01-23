@@ -1,6 +1,6 @@
 'use-client';
 
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, useRef, ChangeEvent, useEffect } from 'react';
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 
@@ -39,6 +39,14 @@ export default function Home() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log(window.navigator.language)
+
+    }
+
+  }, [])
 
   if (loading) {
     return (

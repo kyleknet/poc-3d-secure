@@ -1,17 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Will need to get populated from an API -> DT BE (Global Startup Params**)
-  const processingCode = '010';
-  const merchantType = 'UN';
-  const posConditionCode = '59';
-  const aftServiceFee = 'D2';
-  const acquiringInstitutionIdentificationCode = '200';
-  const accountIdentifierTypeCode = '03';
+  const ex = await fetch(`/api/dtBackend/globalStartupParams`, {
+    headers: {
+      'Cache-control': 'no-cache',
+      'Content-type': 'application/json',
+    },
+    method: 'GET',
+  });
+  const data = await ex.json();
 
   setTimeout(() => {
     res.status(200).json({
-      iframe: `/iFrame3DS.html?cardholderName=${req.body.cardholderName}&creditCardNumber=${req.body.creditCardNumber}&expiryDate=${req.body.expiryDate}&cvv=${req.body.cvv}&amount=${req.body.amount}&processingCode=${processingCode}&merchantType=${merchantType}&posConditionCode=${posConditionCode}&aftServiceFee=${aftServiceFee}&acquiringInstitutionIdentificationCode=${acquiringInstitutionIdentificationCode}&accountIdentifierTypeCode=${accountIdentifierTypeCode}
+      iframe: `/iFrame3DS.html?cardholderName=${req.body.cardholderName}&creditCardNumber=${req.body.creditCardNumber}&expiryDate=${req.body.expiryDate}&cvv=${req.body.cvv}&amount=${req.body.amount}&processingCode=${data.processingCode}&merchantType=${data.merchantType}&posConditionCode=${data.posConditionCode}&aftServiceFee=${data.aftServiceFee}&acquiringInstitutionIdentificationCode=${data.acquiringInstitutionIdentificationCode}&accountIdentifierTypeCode=${data.accountIdentifierTypeCode}
       `,
     });
   }, 2000);

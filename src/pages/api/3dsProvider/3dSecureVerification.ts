@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { hostname } from 'os';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Will need to get populated from an API -> DT BE (Global Startup Params**)
-  const ex = await fetch(`/api/dtBackend/globalStartupParams`, {
+  const ex = await fetch(`https://poc-3d-secure.vercel.app/api/dtBackend/globalStartupParams`, {
     headers: {
       'Cache-control': 'no-cache',
       'Content-type': 'application/json',
